@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<table mat-table
+       [dataSource]="games" multiTemplateDataRows>
+       <ng-container matColumnDef="Start time">
+        <th mat-header-cell *matHeaderCellDef> Start Time </th>
+        <td mat-cell *matCellDef="let game"> {{game.begin_at | date:'short'}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="Team 1">
+        <th mat-header-cell *matHeaderCellDef> Team 1 </th>
+        <td mat-cell *matCellDef="let game"> {{game.opponents[0].opponent.acronym}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="Team 2">
+        <th mat-header-cell *matHeaderCellDef> Team 2 </th>
+        <td mat-cell *matCellDef="let game"> {{game.opponents[1].opponent.acronym}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="Winner">
+        <th mat-header-cell *matHeaderCellDef> Winner </th>
+        <td mat-cell *matCellDef="let game"> {{game.winner? game.winner.acronym:'TBD'}} </td>
+      </ng-container>
+
+  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+  <ng-container matColumnDef="expandedDetail">
+    <td mat-cell *matCellDef="let game" [attr.colspan]="columnsToDisplay.length">
+      <div class="element-detail"
+           [@detailExpand]="game == expandedGame ? 'expanded' : 'collapsed'">
+        <div class="element-description">
+          <!--Team 1 div-->
+          <div class="team1">
+            <img src="{{team1?.image_url}}" class="teamImg">
+            <div id="teamName">{{team1?.name}}</div>
+            <!--Holds all players-->
+            <div class="player-description">
+              <!--Individual Players-->
+              <div>
+                <div class="imgDiv">
+                  <img src="{{team1?.players[0].image_url}}" class="playerImg">
+                </div>
+                <div class="player-content">Name: {{team1?.players[0].name}}</div>
+                <div class="player-content">First Name: {{team1?.players[0].first_name}} </div>
+                <div class="player-content">Last Name: {{team1?.players[0].last_name}}</div>
+                <div class="player-content">Hometown: {{team1?.players[0].hometown}}</div>
+                <div class="player-content">Role: {{team1?.players[0].role}}</div>
+              </div>
+              <div>
+                <div class="imgDiv">
+                  <img src="{{team1?.players[1].image_url}}" class="playerImg">
+                </div>
+                <div class="player-content">Name: {{team1?.players[1].name}}</div>
+                <div class="player-content">First Name: {{team1?.players[1].first_name}} </div>
+                <div class="player-content">Last Name: {{team1?.players[1].last_name}}</div>
+                <div class="player-content">Hometown: {{team1?.players[1].hometown}}</div>
+                <div class="player-content">Role: {{team1?.players[1].role}}</div>
+              </div>
+              <div>
+                <div class="imgDiv">
+                  <img src="{{team1?.players[2].image_url}}" class="playerImg">
+                </div>
+                <div class="player-content">Name: {{team1?.players[2].name}}</div>
+                <div class="player-content">First Name: {{team1?.players[2].first_name}} </div>
+                <div class="player-content">Last Name: {{team1?.players[2].last_name}}</div>
+                <div class="player-content">Hometown: {{team1?.players[2].hometown}}</div>
+                <div class="player-content">Role: {{team1?.players[2].role}}</div>
+              </div>
+              <div>
+                <div class="imgDiv">
+                  <img src="{{team1?.players[3].image_url}}" class="playerImg">
+                </div>
+                <div class="player-content">Name: {{team1?.players[3].name}}</div>
+                <div class="player-content">First Name: {{team1?.players[3].first_name}} </div>
+                <div class="player-content">Last Name: {{team1?.players[3].last_name}}</div>
+                <div class="player-content">Hometown: {{team1?.players[3].hometown}}</div>
+                <div class="player-content">Role: {{team1?.players[3].role}}</div>
+              </div>
+              <div>
+                <div class="imgDiv">
+                  <img src="{{team1?.players[4].image_url}}" class="playerImg">
+                </div>
+                <div class="player-content">Name: {{team1?.players[4].name}}</div>
+                <div class="player-content">First Name: {{team1?.players[4].first_name}} </div>
+                <div class="player-content">Last Name: {{team1?.players[4].last_name}}</div>
+                <div class="player-content">Hometown: {{team1?.players[4].hometown}}</div>
+                <div class="player-content">Role: {{team1?.players[4].role}}</div>
+              </div>            
+            </div>
+          </div>
+          <!--Team 2 div-->
+          <div class="team2">
+            <img src="{{team2?.image_url}}" class="teamImg">
+            <div id="teamName">{{team2?.name}}</div>
+            <!--Holds all of the players-->
+            <div class="player-description">
+              <!--Individual Players-->
+              <div>
+                <div class="imgDiv">
+                  <img src="{{team2?.players[0].image_url}}" class="playerImg">
+                </div>
+                <div class="player-content">Name: {{team2?.players[0].name}}</div>
+                <div class="player-content">First Name: {{team2?.players[0].first_name}} </div>
+                <div class="player-content">Last Name: {{team2?.players[0].last_name}}</div>
+                <div class="player-content">Hometown: {{team2?.players[0].hometown}}</div>
+                <div class="player-content">Role: {{team2?.players[0].role}}</div>
+              </div>
+              <div>
+                <div class="imgDiv">
+                  <img src="{{team2?.players[1].image_url}}" class="playerImg">
+                </div>
+                <div class="player-content">Name: {{team2?.players[1].name}}</div>
+                <div class="player-content">First Name: {{team2?.players[1].first_name}} </div>
+                <div class="player-content">Last Name: {{team2?.players[1].last_name}}</div>
+                <div class="player-content">Hometown: {{team2?.players[1].hometown}}</div>
+                <div class="player-content">Role: {{team2?.players[1].role}}</div>
+              </div>
+              <div>
+                <div class="imgDiv">
+                  <img src="{{team2?.players[2].image_url}}" class="playerImg">
+                </div>
+                <div class="player-content">Name: {{team2?.players[2].name}}</div>
+                <div class="player-content">First Name: {{team2?.players[2].first_name}} </div>
+                <div class="player-content">Last Name: {{team2?.players[2].last_name}}</div>
+                <div class="player-content">Hometown: {{team2?.players[2].hometown}}</div>
+                <div class="player-content">Role: {{team2?.players[2].role}}</div>
+              </div>
+              <div>
+                <div class="imgDiv">
+                  <img src="{{team2?.players[3].image_url}}" class="playerImg">
+                </div>
+                <div class="player-content">Name: {{team2?.players[3].name}}</div>
+                <div class="player-content">First Name: {{team2?.players[3].first_name}} </div>
+                <div class="player-content">Last Name: {{team2?.players[3].last_name}}</div>
+                <div class="player-content">Hometown: {{team2?.players[3].hometown}}</div>
+                <div class="player-content">Role: {{team2?.players[3].role}}</div>
+              </div>
+              <div>
+                <div class="imgDiv">
+                  <img src="{{team2?.players[4].image_url}}" class="playerImg">
+                </div>
+                <div class="player-content">Name: {{team2?.players[4].name}}</div>
+                <div class="player-content">First Name: {{team2?.players[4].first_name}} </div>
+                <div class="player-content">Last Name: {{team2?.players[4].last_name}}</div>
+                <div class="player-content">Hometown: {{team2?.players[4].hometown}}</div>
+                <div class="player-content">Role: {{team2?.players[4].role}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let game; columns: columnsToDisplay;"
+      class="element-row"
+      [class.expanded-row]="expandedGame === game"
+      (click)="expandedGame = expandedGame === game ? null : game" (click)="onSelect(game)">
+  </tr>
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+</table>
+
+
+</body>
+</html>
